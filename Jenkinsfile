@@ -15,16 +15,17 @@ pipeline {
                 sh 'node ./frontend/test.js'
             }
         }
+        stage('Release') {
+            steps {
+                sh '''
+                    oc project akibvl-greetings
+                    oc start-build greeting-console --follow --wait
+                '''
+            }
+
+        }
     }
 }
 
-stage('Release') {
-    steps {
-        sh '''
-             oc project RHT_OCP4_DEV_USER-greetings
-             oc start-build greeting-console --follow --wait
-        '''
-     }
 
-}
 
